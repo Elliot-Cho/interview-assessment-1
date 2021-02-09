@@ -1,5 +1,7 @@
 class Customer < ApplicationRecord
   enum charge_type: %i[volume value]
+
+  validates :name, uniqueness: true
 end
 
 # == Schema Information
