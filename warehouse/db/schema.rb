@@ -13,10 +13,10 @@
 ActiveRecord::Schema.define(version: 2021_02_08_231435) do
 
   create_table "customers", force: :cascade do |t|
-    t.string "name"
-    t.float "flat_fee"
-    t.integer "charge_type"
-    t.float "charge_value"
+    t.string "name", null: false
+    t.float "flat_fee", default: 0.0, null: false
+    t.integer "charge_type", default: 0, null: false
+    t.float "charge_value", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

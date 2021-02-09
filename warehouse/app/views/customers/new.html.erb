@@ -1,0 +1,27 @@
+<h1>New Customer</h1>
+
+<%= form_with model: @customer do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :charge_type %><br>
+    <%= form.collection_radio_buttons :charge_type, Customer.charge_types, :last, :first %>
+  </div>
+
+  <div>
+    <%= form.label :charge_value %><br>
+    <%= form.text_field :charge_value %>
+  </div>
+
+  <div>
+    <%= form.label :flat_fee %><br>
+    <%= form.text_field :flat_fee %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
