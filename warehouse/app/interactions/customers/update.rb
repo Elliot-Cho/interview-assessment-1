@@ -1,19 +1,20 @@
 require 'active_interaction'
 
 module Customers
-  # Interaction to create customers
-  class Create < ActiveInteraction::Base
+  # Interaction to update customers
+  class Update < ActiveInteraction::Base
+    object :customer
+
     string :name
     integer :charge_type
-    float :charge_value
-    float :flat_fee
+    float :charge_value, :flat_fee
 
     def to_model
-      Customer.new
+      customer
     end
 
     def execute
-      customer = Customer.new(
+      customer.assign_attributes(
         name: name,
         charge_type: charge_type,
         charge_value: charge_value,

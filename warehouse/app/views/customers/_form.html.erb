@@ -1,0 +1,37 @@
+<%= form_with model: @customer do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @customer.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :charge_type %><br>
+    <%= form.collection_radio_buttons :charge_type, Customer.charge_types, :last, :first %>
+    <% @customer.errors.full_messages_for(:charge_type).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :charge_value %><br>
+    <%= form.text_field :charge_value %>
+    <% @customer.errors.full_messages_for(:charge_value).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :flat_fee %><br>
+    <%= form.text_field :flat_fee %>
+    <% @customer.errors.full_messages_for(:flat_fee).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
