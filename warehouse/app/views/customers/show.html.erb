@@ -1,1 +1,13 @@
 <h1><%= @customer.name %></h1>
+
+<p>Charge Type: <%= @customer.charge_type.humanize %></p>
+<p>Charge Value: <%= @customer.charge_value %></p>
+<p>Flat Fee: <%= @customer.flat_fee %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_customer_path(@customer) %></li>
+  <li><%= link_to "Destroy", customer_path(@customer),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Back", root_path %></li>
+</ul>
