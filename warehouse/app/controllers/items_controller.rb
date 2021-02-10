@@ -10,14 +10,26 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @customer = find_customer!
     @item = find_item!
   end
 
   def create
     @customer = find_customer!
-    @item = Items::Create.run(item_params.merge(customer: @customer))
+    result = Items::Create.run(item_params.merge(customer: @customer))
 
-    redirect_to customer_path(@customer)
+    if result.valid?
+      redirect_to customer_path(@customer)
+    else
+      @item = result
+      render :new
+    end
+  end
+
+  def update
+  end
+
+  def destroy
   end
 
   private

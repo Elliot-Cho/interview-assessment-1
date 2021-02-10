@@ -13,6 +13,7 @@
 </ul>
 
 <h2>Items</h2>
+<p><%= link_to "Add Item", new_customer_item_path(customer_id: @customer.id) %></p>
 <ul>
   <% @customer.items.each do |item| %>
     <li>
