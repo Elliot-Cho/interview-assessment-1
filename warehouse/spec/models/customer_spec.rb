@@ -31,8 +31,9 @@ RSpec.describe Customer, type: :model do
   context 'when attribute is missing' do
     let(:customer_params) {
       {
+        name: 'new name',
         charge_type: :volume,
-        charge_value: 1,
+        charge_value: nil,
         flat_fee: 1
       }
     }

@@ -55,7 +55,7 @@ describe Items::Update do
   end
 
   context 'when attribute is missing' do
-    let(:customer_params) {
+    let(:item_params) {
       {
         customer: customer,
         name: nil,

@@ -5,8 +5,7 @@ module Customers
   class Create < ActiveInteraction::Base
     string :name
     integer :charge_type
-    float :charge_value
-    float :flat_fee
+    float :charge_value, :flat_fee
 
     def to_model
       Customer.new
