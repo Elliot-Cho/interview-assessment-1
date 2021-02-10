@@ -48,10 +48,10 @@ end
 # Table name: customers
 #
 #  id           :integer          not null, primary key
-#  charge_type  :integer
-#  charge_value :float
-#  flat_fee     :float
-#  name         :string
+#  charge_type  :integer          not null
+#  charge_value :float            not null
+#  flat_fee     :float            not null
+#  name         :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
