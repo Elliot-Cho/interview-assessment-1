@@ -2,6 +2,10 @@ class Item < ApplicationRecord
   belongs_to :customer
 
   validates :name, length: { minimum: 2 }
+
+  def volume
+    length * width * height
+  end
 end
 
 # == Schema Information

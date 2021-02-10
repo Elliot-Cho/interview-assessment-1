@@ -19,16 +19,36 @@ RSpec.describe Item, type: :model do
 
   let(:item) { Item.new(item_params) }
 
-  context 'when all attributes are present' do
-    it 'can create item' do
-      expect(item.save).to eq(true)
+  describe 'create' do
+    context 'when all attributes are present' do
+      it 'can create item' do
+        expect(item.save).to eq(true)
+      end
+
+      context 'when name too short' do
+        let(:item_params) {
+          {
+            customer: customer,
+            name: 'a',
+            height: 5,
+            length: 4,
+            width: 5,
+            weight: 100,
+            value: 1000
+          }
+        }
+
+        it 'cannot create item' do
+          expect { item.save! }.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
     end
 
-    context 'when name too short' do
+    context 'when attribute is missing' do
       let(:item_params) {
         {
           customer: customer,
-          name: 'a',
+          name: nil,
           height: 5,
           length: 4,
           width: 5,
@@ -43,21 +63,11 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  context 'when attribute is missing' do
-    let(:item_params) {
-      {
-        customer: customer,
-        name: nil,
-        height: 5,
-        length: 4,
-        width: 5,
-        weight: 100,
-        value: 1000
-      }
-    }
-
-    it 'cannot create item' do
-      expect { item.save! }.to raise_error(ActiveRecord::RecordInvalid)
+  describe 'volume' do
+    context 'when getting volume' do
+      it 'should calculate volume correctly' do
+        expect(item.volume).to eq(100)
+      end
     end
   end
 end
