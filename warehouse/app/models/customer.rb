@@ -1,4 +1,6 @@
 class Customer < ApplicationRecord
+  has_many :items
+
   enum charge_type: %i[volume value]
 
   validates :name, uniqueness: true, length: { minimum: 2 }
