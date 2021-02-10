@@ -27,9 +27,23 @@ class ItemsController < ApplicationController
   end
 
   def update
+    @customer = find_customer!
+    @item = find_item!
+
+    result = Items::Update.run(item_params.merge(item: @item))
+
+    if result.valid?
+      redirect_to customer_item_path(customer: @customer, item: @item)
+    else
+      @item = result
+      render :edit
+    end
   end
 
   def destroy
+    Items::Destroy.run!(item: find_item!)
+
+    redirect_to customer_path(find_customer!)
   end
 
   private
