@@ -26,7 +26,7 @@ module Customers
     def pricing_by_value
       total_value = customer.items.map(&:value).sum
 
-      customer.charge_value / total_value * 100
+      customer.charge_value / 100 * total_value
     end
 
     # Validation
