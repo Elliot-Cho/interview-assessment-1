@@ -4,12 +4,12 @@ class CustomersController < ApplicationController
     @customers = Customer.all
   end
 
-  def show
-    @customer = find_customer!
-  end
-
   def new
     @customer = Customer.new
+  end
+
+  def show
+    @customer = find_customer!
   end
 
   def edit
@@ -54,7 +54,7 @@ class CustomersController < ApplicationController
   def find_customer!
     customer = Customers::Find.run(params)
 
-    raise ActiveRecord::RecordNotFound, outcome.errors.full_messages.to_sentence unless customer.valid?
+    raise ActiveRecord::RecordNotFound, customer.errors.full_messages.to_sentence unless customer.valid?
 
     customer.result
   end
