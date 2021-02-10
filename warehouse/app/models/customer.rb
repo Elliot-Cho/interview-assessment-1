@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_many :items
+  has_many :items, dependent: :destroy
 
   enum charge_type: %i[volume value]
 
