@@ -11,3 +11,13 @@
                   data: { confirm: "Are you sure?" } %></li>
   <li><%= link_to "Back", root_path %></li>
 </ul>
+
+<h2>Items</h2>
+<p><%= link_to "Add Item", new_customer_item_path(customer_id: @customer.id) %></p>
+<ul>
+  <% @customer.items.each do |item| %>
+    <li>
+      <%= link_to item.name, customer_item_path(id: item.id, customer_id: @customer.id) %>
+    </li>
+  <% end %>
+</ul>

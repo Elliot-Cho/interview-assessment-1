@@ -1,0 +1,47 @@
+<%= form_with model: [ @customer, @item ] do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @item.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :height %><br>
+    <%= form.text_area :height %>
+    <% @item.errors.full_messages_for(:height).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :length %><br>
+    <%= form.text_area :length %>
+    <% @item.errors.full_messages_for(:length).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :width %><br>
+    <%= form.text_area :width %>
+    <% @item.errors.full_messages_for(:width).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :weight %><br>
+    <%= form.text_area :weight %>
+    <% @item.errors.full_messages_for(:weight).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :value %><br>
+    <%= form.text_area :value %>
+    <% @item.errors.full_messages_for(:value).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

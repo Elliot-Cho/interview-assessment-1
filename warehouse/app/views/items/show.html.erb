@@ -1,0 +1,14 @@
+<h1><%= @customer.name %></h1>
+<h2>Item: <%= @item.name %></h2>
+
+<p>Dimensions: <%= @item.length %>L, <%= @item.width %>W, <%= @item.height %>H</p>
+<p>Weight: <%= @item.weight %></p>
+<p>Value: <%= @item.value %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_customer_item_path(customer: @customer, item: @item) %></li>
+  <li><%= link_to "Destroy", customer_item_path(customer: @customer, item: @item),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Back", customer_path(@customer) %></li>
+</ul>
