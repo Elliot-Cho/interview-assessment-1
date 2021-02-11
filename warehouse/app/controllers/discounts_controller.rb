@@ -5,6 +5,8 @@ class DiscountsController < ApplicationController
   end
 
   def edit
+    @customer = find_customer!
+    @discount = find_discount!
   end
 
   def create
@@ -20,9 +22,23 @@ class DiscountsController < ApplicationController
   end
 
   def update
+    @customer = find_customer!
+    @discount = find_discount!
+
+    result = Discounts::Update.run(discount_params.merge(discount: @discount))
+
+    if result.valid?
+      redirect_to customer_path(@customer)
+    else
+      @discount = result
+      render :edit
+    end
   end
 
   def destroy
+    Discounts::Destroy.run!(discount: find_discount!)
+
+    redirect_to customer_path(find_customer!)
   end
 
   private
@@ -40,7 +56,7 @@ class DiscountsController < ApplicationController
   end
 
   def find_discount!
-    discount = Discount::Find.run(params)
+    discount = Discounts::Find.run(params)
 
     raise ActiveRecord::RecordNotFound, discount.errors.full_messages.to_sentence unless discount.valid?
 
