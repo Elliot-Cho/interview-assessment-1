@@ -23,16 +23,34 @@ module Customers
     end
 
     def pricing_by_volume(json_data)
-      # Instantiate items to access the volume method
-      total_volume = json_data.map { |item| Item.new(item).volume }.sum
+      json_data.each_with_index.map { |item_params, index|
+        # Instantiate items to access the volume method
+        item = Item.new(item_params)
 
-      total_volume * customer.charge_value
+        price = item.volume * customer.charge_value
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
+
+        price - discount
+      }.sum
     end
 
     def pricing_by_value(json_data)
-      total_value = json_data.map { |item| item['value'].to_f }.sum
+      json_data.each_with_index.map { |item_params, index|
+        price = item_params['value'].to_f * (customer.charge_value / 100)
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
 
-      customer.charge_value / 100 * total_value
+        price - discount
+      }.sum
+    end
+
+    def discount_percentage_for_item_index(index)
+      discount = customer.discounts.find_by(
+        'item_coverage_from <= ? AND (item_coverage_to IS NULL OR item_coverage_to >= ?)',
+        index,
+        index
+      )
+
+      discount ? discount.percentage_off : 0
     end
 
     # Validation

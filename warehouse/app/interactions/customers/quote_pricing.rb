@@ -18,15 +18,35 @@ module Customers
     end
 
     def pricing_by_volume
-      total_volume = customer.items.map(&:volume).sum
+      ordered_items = customer.items.order(:created_at)
 
-      total_volume * customer.charge_value
+      ordered_items.each_with_index.map { |item, index|
+        price = item.volume * customer.charge_value
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
+
+        price - discount
+      }.sum
     end
 
     def pricing_by_value
-      total_value = customer.items.map(&:value).sum
+      ordered_items = customer.items.order(:created_at)
 
-      customer.charge_value / 100 * total_value
+      ordered_items.each_with_index.map { |item, index|
+        price = item.value * (customer.charge_value / 100)
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
+
+        price - discount
+      }.sum
+    end
+
+    def discount_percentage_for_item_index(index)
+      discount = customer.discounts.find_by(
+        'item_coverage_from <= ? AND (item_coverage_to IS NULL OR item_coverage_to >= ?)',
+        index,
+        index
+      )
+
+      discount ? discount.percentage_off : 0
     end
 
     # Validation

@@ -82,14 +82,14 @@ describe Customers::QuotePricingFromInput do
         let(:charge_type) { :volume }
 
         it 'calculates pricing by volume & applies discount' do
-          expect(subject).to eq(136.8)
+          expect(subject).to eq(136.2)
         end
 
         context 'when customer has flat fee' do
           let(:flat_fee) { 20 }
 
           it 'calculates pricing by volume with discount + flat fee' do
-            expect(subject).to eq(156.8)
+            expect(subject).to eq(156.2)
           end
         end
       end
