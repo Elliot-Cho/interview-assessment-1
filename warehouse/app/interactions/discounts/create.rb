@@ -6,7 +6,8 @@ module Discounts
     object :customer
 
     float :percentage_off
-    integer :item_coverage_from, :item_coverage_to
+    integer :item_coverage_to, default: nil
+    integer :item_coverage_from, default: 0
 
     def to_model
       Discount.new

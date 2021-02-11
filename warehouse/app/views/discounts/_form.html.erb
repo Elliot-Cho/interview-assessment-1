@@ -1,0 +1,26 @@
+<%= form_with model: [ @customer, @discount ] do |form| %>
+  <div>
+    <%= form.label :percentage_off %><br>
+    <%= form.text_field :percentage_off %>
+    <% @discount.errors.full_messages_for(:percentage_off).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :item_coverage_from %><br>
+    <%= form.text_field :item_coverage_from %>
+    <% @discount.errors.full_messages_for(:item_coverage_from).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :item_coverage_to %><br>
+    <%= form.text_field :item_coverage_to %>
+    <% @discount.errors.full_messages_for(:item_coverage_to).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
