@@ -29,7 +29,7 @@ describe Items::Create do
     context 'when name is too short' do
       let(:name) { 'a' }
 
-      it 'does not update item' do
+      it 'does not create item' do
         expect { subject }.to raise_error(ActiveInteraction::InvalidInteractionError)
       end
     end
