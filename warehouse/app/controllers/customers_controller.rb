@@ -10,6 +10,9 @@ class CustomersController < ApplicationController
 
   def show
     @customer = find_customer!
+    quote = Customers::QuotePricing.run(customer: @customer)
+
+    @pricing = quote.valid? ? quote.result : 0
   end
 
   def edit
