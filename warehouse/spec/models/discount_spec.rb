@@ -1,7 +1,52 @@
 require 'rails_helper'
 
 RSpec.describe Discount, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:customer) {
+    Customer.create!(name: 'customer', charge_type: :volume, charge_value: 1, flat_fee: 1)
+  }
+
+  let(:percentage_off) { 10 }
+  let(:item_coverage_from) { 0 }
+  let(:discount_params) {
+    {
+      customer: customer,
+      percentage_off: percentage_off,
+      item_coverage_from: item_coverage_from,
+      item_coverage_to: 2
+    }
+  }
+
+  let(:discount) { Discount.new(discount_params) }
+
+  context 'when all attributes are present' do
+    it 'can create discount' do
+      expect(discount.save).to eq(true)
+    end
+
+    context 'if percentage value is invalid' do
+      let(:percentage_off) { 1000 }
+
+      it 'fails validation' do
+        expect { discount.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'if item coverage from is larger than item coverage to' do
+      let(:item_coverage_from) { 50 }
+
+      it 'fails validation' do
+        expect { discount.save! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
+
+  context 'when required attribute is missing' do
+    let(:percentage_off) { nil }
+
+    it 'cannot create discount' do
+      expect { discount.save! }.to raise_error(ActiveRecord::NotNullViolation)
+    end
+  end
 end
 
 # == Schema Information

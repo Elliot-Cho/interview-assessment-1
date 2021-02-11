@@ -14,6 +14,7 @@ class Discount < ApplicationRecord
   end
 
   def percentage_off_within_bounds
+    return if percentage_off.nil?
     return if percentage_off.between?(0, 100)
 
     errors.add(:percentage_off, 'discount must be between 0% and 100%')
