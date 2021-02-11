@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   resources :customers do
     resources :items
+
+    post :quote_from_input, on: :member
   end
 end
