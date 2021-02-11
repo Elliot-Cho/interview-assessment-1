@@ -73,6 +73,58 @@ describe Customers::QuotePricing do
         end
       end
     end
+
+    context 'when customer has discounts' do
+      let!(:discount1) {
+        Discount.create!(
+          customer: customer,
+          percentage_off: 5,
+          item_coverage_from: 0,
+          item_coverage_to: 1
+        )
+      }
+
+      let!(:discount2) {
+        Discount.create!(
+          customer: customer,
+          percentage_off: 10,
+          item_coverage_from: 2
+        )
+      }
+
+      context 'when customer is charged by volume' do
+        let(:charge_type) { :volume }
+
+        it 'calculates pricing by volume & applies discount' do
+          expect(subject).to eq(22)
+        end
+
+        context 'when customer has flat fee' do
+          let(:flat_fee) { 20 }
+
+          it 'calculates pricing by volume with discount + flat fee' do
+            expect(subject).to eq(42)
+          end
+        end
+      end
+
+      context 'when customer is charged by value' do
+        let(:charge_type) { :value }
+        let(:charge_value) { 10 }
+
+        it 'calculates pricing by value and applies discount' do
+          expect(subject).to eq(54.5)
+        end
+
+        context 'wehn customer has flat fee' do
+          let(:flat_fee) { 20 }
+
+          it 'calculates pricing by value with discount + flat fee' do
+            expect(subject).to eq(74.5)
+          end
+        end
+      end
+    end
   end
 
   context 'when customer has no items' do

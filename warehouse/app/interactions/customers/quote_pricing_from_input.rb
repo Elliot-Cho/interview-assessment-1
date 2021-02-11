@@ -12,27 +12,43 @@ module Customers
 
     def execute
       json_data = JSON.parse(input)['items']
+      items = json_data.map { |item_params| Item.new(item_params) }
 
-      customer.flat_fee + calculate_pricing(json_data)
+      customer.flat_fee + calculate_pricing(items)
     end
 
     private
 
-    def calculate_pricing(json_data)
-      send("pricing_by_#{customer.charge_type}", json_data)
+    def calculate_pricing(items)
+      send("pricing_by_#{customer.charge_type}", items)
     end
 
-    def pricing_by_volume(json_data)
-      # Instantiate items to access the volume method
-      total_volume = json_data.map { |item| Item.new(item).volume }.sum
+    def pricing_by_volume(items)
+      items.each_with_index.map { |item, index|
+        price = item.volume * customer.charge_value
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
 
-      total_volume * customer.charge_value
+        price - discount
+      }.sum
     end
 
-    def pricing_by_value(json_data)
-      total_value = json_data.map { |item| item['value'].to_f }.sum
+    def pricing_by_value(items)
+      items.each_with_index.map { |item, index|
+        price = item.value * (customer.charge_value / 100)
+        discount = price * (discount_percentage_for_item_index(index + 1) / 100)
 
-      customer.charge_value / 100 * total_value
+        price - discount
+      }.sum
+    end
+
+    def discount_percentage_for_item_index(index)
+      discount = customer.discounts.find_by(
+        'item_coverage_from <= ? AND (item_coverage_to IS NULL OR item_coverage_to >= ?)',
+        index,
+        index
+      )
+
+      discount ? discount.percentage_off : 0
     end
 
     # Validation
