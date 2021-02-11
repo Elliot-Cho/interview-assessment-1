@@ -1,5 +1,7 @@
 # Controller for customer model
 class CustomersController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:quote_from_input]
+
   def index
     @customers = Customer.all
   end
@@ -43,6 +45,14 @@ class CustomersController < ApplicationController
     Customers::Destroy.run!(customer: find_customer!)
 
     redirect_to root_path
+  end
+
+  def quote_from_input
+    customer = find_customer!
+
+    quote = Customers::QuotePricingFromInput.run(customer: customer, input: params['input'])
+
+    render json: quote.result
   end
 
   private
