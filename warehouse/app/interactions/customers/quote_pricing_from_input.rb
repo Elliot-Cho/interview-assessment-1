@@ -12,21 +12,19 @@ module Customers
 
     def execute
       json_data = JSON.parse(input)['items']
+      items = json_data.map { |item_params| Item.new(item_params) }
 
-      customer.flat_fee + calculate_pricing(json_data)
+      customer.flat_fee + calculate_pricing(items)
     end
 
     private
 
-    def calculate_pricing(json_data)
-      send("pricing_by_#{customer.charge_type}", json_data)
+    def calculate_pricing(items)
+      send("pricing_by_#{customer.charge_type}", items)
     end
 
-    def pricing_by_volume(json_data)
-      json_data.each_with_index.map { |item_params, index|
-        # Instantiate items to access the volume method
-        item = Item.new(item_params)
-
+    def pricing_by_volume(items)
+      items.each_with_index.map { |item, index|
         price = item.volume * customer.charge_value
         discount = price * (discount_percentage_for_item_index(index + 1) / 100)
 
@@ -34,9 +32,9 @@ module Customers
       }.sum
     end
 
-    def pricing_by_value(json_data)
-      json_data.each_with_index.map { |item_params, index|
-        price = item_params['value'].to_f * (customer.charge_value / 100)
+    def pricing_by_value(items)
+      items.each_with_index.map { |item, index|
+        price = item.value * (customer.charge_value / 100)
         discount = price * (discount_percentage_for_item_index(index + 1) / 100)
 
         price - discount
