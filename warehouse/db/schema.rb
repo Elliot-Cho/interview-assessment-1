@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_235442) do
+ActiveRecord::Schema.define(version: 2021_02_11_194925) do
 
   create_table "customers", force: :cascade do |t|
     t.string "name", null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 2021_02_09_235442) do
     t.float "charge_value", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.float "percentage_off", null: false
+    t.integer "item_coverage_from"
+    t.integer "item_coverage_to"
+    t.integer "customer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_discounts_on_customer_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -34,5 +44,6 @@ ActiveRecord::Schema.define(version: 2021_02_09_235442) do
     t.index ["customer_id"], name: "index_items_on_customer_id"
   end
 
+  add_foreign_key "discounts", "customers"
   add_foreign_key "items", "customers"
 end
