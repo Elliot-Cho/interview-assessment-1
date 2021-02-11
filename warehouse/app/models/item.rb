@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   belongs_to :customer
 
   validates :name, length: { minimum: 2 }
+  validates :length, :height, :width, presence: true
 
   def volume
     length * width * height

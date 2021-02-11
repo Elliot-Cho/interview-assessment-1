@@ -38,14 +38,12 @@ module Customers
     # Validation
     def valid_json
       JSON.parse(input)
-    rescue JSON::ParserError
-      errors.add(:input, 'input is not a valid json')
+    rescue JSON::ParserError, TypeError
+      raise ActiveInteraction::InvalidInteractionError, 'input is not a valid json'
     end
 
     def valid_items
       json_data = JSON.parse(input)['items']
-
-      errors.add(:input, 'input does not contain items') unless json_data
 
       errors.add(:input, 'input contains invalid items') unless json_data.map { |item|
         Item.new(item.merge(customer: customer))
