@@ -10,7 +10,7 @@ class Discount < ApplicationRecord
     return if item_coverage_from.nil? || item_coverage_to.nil?
     return if item_coverage_from < item_coverage_to
 
-    errors.add(:item_coverage_from, 'item coverage from must be less than item coverage to')
+    errors.add(:item_coverage_from, 'must be less than item coverage to')
   end
 
   def percentage_off_within_bounds

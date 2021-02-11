@@ -7,15 +7,15 @@
     <% end %>
   </div>
   <div>
-    <%= form.label :item_coverage_from%><br>
-    <%= form.text_field :item_coverage_from%>
+    <%= form.label :item_coverage_from %><br>
+    <%= form.text_field :item_coverage_from %>
     <% @discount.errors.full_messages_for(:item_coverage_from).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
   <div>
-    <%= form.label :item_coverage_to%><br>
-    <%= form.text_field :item_coverage_to%>
+    <%= form.label :item_coverage_to %><br>
+    <%= form.text_field :item_coverage_to %>
     <% @discount.errors.full_messages_for(:item_coverage_to).each do |message| %>
       <div><%= message %></div>
     <% end %>

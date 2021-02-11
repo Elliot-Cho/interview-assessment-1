@@ -14,7 +14,7 @@ class DiscountsController < ApplicationController
     if result.valid?
       redirect_to customer_path(@customer)
     else
-      @item = result
+      @discount = result
       render :new
     end
   end
