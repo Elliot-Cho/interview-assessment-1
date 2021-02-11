@@ -1,0 +1,8 @@
+<h1><%= @customer.name %></h1>
+<h2>Edit Discount</h2>
+<%= button_to "Remove Discount", customer_discount_path(customer: @customer, discount: @discount),
+            method: :delete,
+            data: { confirm: "Are you sure?" } %>
+
+<%= render "form", discount: @discount %>
+
