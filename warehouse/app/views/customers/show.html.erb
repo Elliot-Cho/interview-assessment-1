@@ -12,6 +12,20 @@
   <li><%= link_to "Back", root_path %></li>
 </ul>
 
+<h2>Discounts</h2>
+<p><%= link_to "Add Discount", new_customer_discount_path(customer_id: @customer.id) %></p>
+<ul>
+  <% @customer.discounts.each do |discount| %>
+    <li>
+      <% if discount.item_coverage_to.present? %>
+        <%= link_to "#{discount.percentage_off}% off of items #{discount.item_coverage_from || 0} to #{discount.item_coverage_to}", edit_customer_discount_path(id: discount.id, customer_id: @customer.id) %>
+      <% else %>
+        <%= link_to "#{discount.percentage_off}% off of all items starting from item #{discount.item_coverage_from || 0}", edit_customer_discount_path(id: discount.id, customer_id: @customer.id) %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
 <h2>Items</h2>
 <p><%= link_to "Add Item", new_customer_item_path(customer_id: @customer.id) %></p>
 <ul>

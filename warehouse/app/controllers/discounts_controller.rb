@@ -1,11 +1,22 @@
 class DiscountsController < ApplicationController
   def new
+    @customer = find_customer!
+    @discount = Discount.new
   end
 
   def edit
   end
 
   def create
+    @customer = find_customer!
+    result = Discounts::Create.run(discount_params.merge(customer: @customer))
+
+    if result.valid?
+      redirect_to customer_path(@customer)
+    else
+      @item = result
+      render :new
+    end
   end
 
   def update
