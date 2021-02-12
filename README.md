@@ -26,7 +26,7 @@ This repo contains my solution for Second Closet's take-home technical assessmen
 * Have the requirements installed
 * Run: `bundle install` to install necessary gems
 * Run: `bundle e rails db:setup` to setup and seed the sqlite3 database
-* Run: `bundle e rails s` to run the server
+* In the 'warehouse' directory of the project, rn: `bundle e rails s` to run the server
 
 ### How to Use:
 * To create or edit customer data, pricing and discounts, access the local server `localhost:3000` and use the (really ugly) UI to make changes.
