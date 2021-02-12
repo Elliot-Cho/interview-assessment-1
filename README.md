@@ -68,6 +68,8 @@ Examples:
 * From File
   * ```curl -X GET -i -H "Accept: application/json" -H "Content-Type application/json" --data-binary "@\Desktop\testfile.txt" "http://localhost:3000/customers/5/quote_from_input"```
   
+Note: `quote_from_input` will not write item data to the database, it only returns the price quote.
+  
 ## Issues:
 * Styling and frontend not yet implemented
 * Authentication & security not yet implemented
