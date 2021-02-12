@@ -113,11 +113,24 @@ describe Customers::QuotePricingFromInput do
     end
   end
 
-  context 'when input is not valid json' do
+  context 'when input is not json' do
     let(:params) {
       {
         customer: customer,
         input: 'invalid'
+      }
+    }
+
+    it 'fails validation' do
+      expect { subject }.to raise_error(ActiveInteraction::InvalidInteractionError)
+    end
+  end
+
+  context 'when input contains no items' do
+    let(:params) {
+      {
+        customer: customer,
+        input: '{"items": []}'
       }
     }
 
@@ -133,6 +146,32 @@ describe Customers::QuotePricingFromInput do
         input: '{"items": [{"name": "Fridge", "weight": "300",' \
           '"value": "1000"}, {"name": "Sofa", "length": "6", "height": "4", "width": "3", "weight": "100",' \
           '"value": "500"}]}'
+      }
+    }
+
+    it 'fails validation' do
+      expect { subject }.to raise_error(ActiveInteraction::InvalidInteractionError)
+    end
+  end
+
+  context 'when input contains invalid json input' do
+    let(:params) {
+      {
+        customer: customer,
+        input: '{"bleh": "bleh" }'
+      }
+    }
+
+    it 'fails validation' do
+      expect { subject }.to raise_error(ActiveInteraction::InvalidInteractionError)
+    end
+  end
+
+  context 'when input contains items with incorrect attributes' do
+    let(:params) {
+      {
+        customer: customer,
+        input: '{"items": [{"name": "Fridge", "bacon": "eggs", "weight": "300", "value": "1000"}]}'
       }
     }
 

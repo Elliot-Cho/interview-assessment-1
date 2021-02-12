@@ -29,8 +29,15 @@ module Customers
     def valid_items
       json_data = JSON.parse(input)['items']
 
+      unless json_data&.any?
+        errors.add(:input, 'input contains no valid items')
+        return
+      end
+
       errors.add(:input, 'input contains invalid items') unless json_data.map { |item|
-        Item.new(item.merge(customer: customer))
+        item_checker = Item.new
+        attributes = item.select { |key| item_checker.attributes.keys.member?(key.to_s) }
+        Item.new(attributes.merge(customer: customer))
       }.all?(&:valid?)
     end
   end
