@@ -8,18 +8,26 @@
   </div>
   <div>
     <%= form.label :item_coverage_from %><br>
-    <%= form.text_field :item_coverage_from %>
+    <div>
+      <%= form.text_field :item_coverage_from %>
+      (Item number this discount should start applying from)
+    <div>
     <% @discount.errors.full_messages_for(:item_coverage_from).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
   <div>
     <%= form.label :item_coverage_to %><br>
-    <%= form.text_field :item_coverage_to %>
+    <div>
+      <%= form.text_field :item_coverage_to %>
+      (Item number this discount should apply up to)
+    </div>
     <% @discount.errors.full_messages_for(:item_coverage_to).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
+  <p>For example: Item coverage from 0 to 100 will apply this discount to the first 100 items</p>
+  <p>Leaving 'Item coverage to' blank will apply the discount to all items after 'Item coverage from'</p>
   <div>
     <%= form.submit %>
   </div>
