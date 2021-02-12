@@ -48,10 +48,13 @@ class CustomersController < ApplicationController
     redirect_to root_path
   end
 
+  # curl -X GET -i -H "Accept: application/json" -H "Content-Type application/json" --data-binary "@{path to file here}" "http://localhost:3000/customers/{customer id here}/quote_from_input"
   def quote_from_input
     customer = find_customer!
 
-    quote = Customers::QuotePricingFromInput.run(customer: customer, input: params['input'])
+    input = request.body.read
+
+    quote = Customers::QuotePricingFromInput.run(customer: customer, input: input)
 
     render json: quote.result
   end
