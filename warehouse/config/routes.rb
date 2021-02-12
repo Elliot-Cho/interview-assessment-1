@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     resources :items
     resources :discounts
 
-    post :quote_from_input, on: :member
+    get :quote_from_input, on: :member
   end
 end
