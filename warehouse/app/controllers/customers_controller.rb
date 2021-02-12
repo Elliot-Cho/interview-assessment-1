@@ -12,6 +12,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = find_customer!
+    @pricing = Customers::QuotePricing.run(customer: @customer).result
   end
 
   def edit

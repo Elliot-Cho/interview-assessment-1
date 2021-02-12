@@ -4,6 +4,10 @@
 <p>Charge Value: <%= @customer.charge_value %></p>
 <p>Flat Fee: <%= @customer.flat_fee %></p>
 
+<% if @pricing %>
+  <p>Price Quote: $<%= @pricing.round(2) %></p>
+<% end %>
+
 <ul>
   <li><%= link_to "Edit", edit_customer_path(@customer) %></li>
   <li><%= link_to "Destroy", customer_path(@customer),
