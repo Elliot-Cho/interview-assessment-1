@@ -9,7 +9,10 @@
 
   <div>
     <%= form.label :charge_type %><br>
-    <%= form.collection_radio_buttons :charge_type, Customer.charge_types, :last, :first %>
+    <% Customer.charge_types.each_key do |charge_type| %>
+      <%= form.radio_button :charge_type, charge_type == 'volume' ? 0 : 1, checked: @customer.charge_type == charge_type %>
+      <%= form.label charge_type.to_sym %>
+    <% end%>
     <% @customer.errors.full_messages_for(:charge_type).each do |message| %>
       <div><%= message %></div>
     <% end %>
@@ -17,7 +20,10 @@
 
   <div>
     <%= form.label :charge_value %><br>
-    <%= form.text_field :charge_value %>
+    <div>
+      <%= form.text_field :charge_value %>
+      (For volume, charge value is in dollars per volume. For value, charge value is in percentage of value)
+    </div>
     <% @customer.errors.full_messages_for(:charge_value).each do |message| %>
       <div><%= message %></div>
     <% end %>
