@@ -24,14 +24,15 @@ This repo contains my solution for Second Closet's take-home technical assessmen
 ### How to Launch:
 * Clone this repository
 * Have the requirements installed
+* Run: `bundle install` to install necessary gems
 * Run: `bundle e rails db:setup` to setup and seed the sqlite3 database
-* Run: `bundle e rails s`
+* Run: `bundle e rails s` to run the server
 
 ### How to Use:
 * To create or edit customer data, pricing and discounts, access the local server `localhost:3000` and use the (really ugly) UI to make changes.
 * A customer can be quoted for prices in one of two ways:
   1. Use the ugly UI to add items to a customer. The customer page should update with a price quote for that customer's current set of items, given their pricing.
-  2. Hit the `quote_from_input` endpoint using direct input or from a file:
+  2. With the server running locally, hit the `quote_from_input` endpoint using direct input or input from a file:
   * Direct input:
     * ```curl -X GET -i -H "Accept: application/json" -H "Content-Type application/json" -d {data here} "http://localhost:3000/customers/{customer id}/quote_from_input"```
   * From a file:
