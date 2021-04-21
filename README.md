@@ -1,6 +1,6 @@
-# Second Closet Assessment
+# Technical Interview Assessment
 
-This repo contains my solution for Second Closet's take-home technical assessment.
+This repo contains my solution for a take-home technical assessment provided by a Toronto-based tech company.
 
 ## Author
 
