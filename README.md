@@ -14,6 +14,9 @@ This repo contains my solution for a take-home technical assessment provided by 
 
 ## Usage Documentation
 
+### Problem
+* See 'Api Design Take home.pdf' in the root of the repo.
+
 ### Requirements
 * Ruby 2.7.2 & Rails
 * Bundler
